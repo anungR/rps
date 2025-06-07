@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Rencana Pembelajaran Semester (RPS)</title>
+    <!-- Memuat Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles untuk meningkatkan tampilan */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-section {
+            @apply bg-white p-6 rounded-lg shadow-md mb-8;
+        }
+        .form-section-title {
+            @apply text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-3 mb-6;
+        }
+        .form-label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+        .form-input, .form-textarea, .form-select {
+            @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm;
+        }
+        .btn-primary {
+            @apply inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+        }
+        .btn-secondary {
+            @apply inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50;
+        }
+        .btn-danger {
+            @apply inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700;
+        }
+        .dynamic-list-item {
+            @apply flex items-center space-x-2 mb-2;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="max-w-4xl mx-auto">
+            <header class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-900">Generator Rencana Pembelajaran Semester (RPS)</h1>
+                <p class="text-md text-gray-600 mt-2">Isi formulir di bawah ini untuk membuat dokumen RPS secara otomatis.</p>
+            </header>
+
+            <form id="rps-form" class="space-y-8">
+                <!-- Informasi Mata Kuliah -->
+                <div class="form-section">
+                    <h2 class="form-section-title">1. Informasi Mata Kuliah</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
+                            <input type="text" id="nama_mk" name="nama_mk" class="form-input" value="Teori Dasar Desain Komunikasi Visual" required>
+                        </div>
+                        <div>
+                            <label for="kode_mk" class="form-label">Kode Mata Kuliah</label>
+                            <input type="text" id="kode_mk" name="kode_mk" class="form-input" value="241510401101" required>
+                        </div>
+                        <div>
+                            <label for="rumpun_mk" class="form-label">Rumpun MK</label>
+                            <input type="text" id="rumpun_mk" name="rumpun_mk" class="form-input" value="Desain Komunikasi Visual" required>
+                        </div>
+                        <div>
+                            <label for="bobot_sks" class="form-label">Bobot (SKS)</label>
+                            <input type="text" id="bobot_sks" name="bobot_sks" class="form-input" value="2 SKS (Teori)" required>
+                        </div>
+                        <div>
+                            <label for="semester" class="form-label">Semester</label>
+                            <input type="number" id="semester" name="semester" class="form-input" value="1" required>
+                        </div>
+                        <div>
+                            <label for="tgl_penyusunan" class="form-label">Tanggal Penyusunan</label>
+                            <input type="date" id="tgl_penyusunan" name="tgl_penyusunan" class="form-input" value="2024-06-30" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Otorisasi -->
+                <div class="form-section">
+                    <h2 class="form-section-title">2. Otorisasi</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="dosen_pengembang" class="form-label">Dosen Pengembang RPS</label>
+                            <input type="text" id="dosen_pengembang" name="dosen_pengembang" class="form-input" value="M. Harun Rosyid Ridlo, M.Sn." required>
+                        </div>
+                        <div>
+                            <label for="ka_prodi" class="form-label">Kepala Program Studi</label>
+                            <input type="text" id="ka_prodi" name="ka_prodi" class="form-input" value="Rendya Adi Kurniawan, M.Sn." required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Capaian Pembelajaran -->
+                <div class="form-section">
+                    <h2 class="form-section-title">3. Capaian Pembelajaran (CP)</h2>
+                    <div>
+                        <label for="cpl_prodi" class="form-label">CPL-PRODI yang dibebankan pada MK</label>
+                        <textarea id="cpl_prodi" name="cpl_prodi" rows="4" class="form-textarea" required>(CPL-2) Mahasiswa mampu mengaplikasikan ilmu pengetahuan, teknologi, seni, dan budaya nusantara dalam perancangan serta pengkajian desain komunikasi visual sesuai etika akademik.\n(CPL-4) Mahasiswa mampu menguasai konsep dan teori desain, komunikasi, serta estetika visual secara sistematis.</textarea>
+                    </div>
+                    <div class="mt-4">
+                        <label for="cpmk" class="form-label">Capaian Pembelajaran Mata Kuliah (CPMK)</label>
+                        <textarea id="cpmk" name="cpmk" rows="4" class="form-textarea" required>Mahasiswa mampu mengidentifikasi definisi, tujuan, ruang lingkup, dan fungsi DKV dalam komunikasi massa.\nMahasiswa mampu mengidentifikasi dan menjelaskan prinsip dan elemen visual, serta pesan maupun media kaitannya dengan perancangan desain komunikasi visual.</textarea>
+                    </div>
+                </div>
+
+                <!-- Deskripsi & Pustaka -->
+                <div class="form-section">
+                    <h2 class="form-section-title">4. Deskripsi, Materi, dan Pustaka</h2>
+                     <div>
+                        <label for="deskripsi_mk" class="form-label">Deskripsi Singkat Mata Kuliah</label>
+                        <textarea id="deskripsi_mk" name="deskripsi_mk" rows="4" class="form-textarea" required>Mata kuliah Teori Dasar DKV mempelajari tentang berbagai konsep yang berkaitan dengan penggunaan desain komunikasi visual dalam komunikasi massa, khususnya iklan. Mulai dari konsep kaitan desain dengan komunikasi, perkembangan desain dari berbagai era, hingga perancangan desain. Konsep-konsep di dalam perancangan desain meliputi prinsip-prinsip dan elemen visual serta penyampaian pesan maupun penggunaan media dalam desain komunikasi visual.</textarea>
+                    </div>
+                    <div class="mt-4">
+                        <label class="form-label">Pustaka Utama</label>
+                        <div id="pustaka-utama-list">
+                            <!-- Pustaka items will be added here -->
+                        </div>
+                        <button type="button" onclick="addPustaka('utama')" class="btn-secondary mt-2">Tambah Pustaka Utama</button>
+                    </div>
+                     <div class="mt-4">
+                        <label class="form-label">Pustaka Pendukung</label>
+                        <div id="pustaka-pendukung-list">
+                            <!-- Pustaka items will be added here -->
+                        </div>
+                        <button type="button" onclick="addPustaka('pendukung')" class="btn-secondary mt-2">Tambah Pustaka Pendukung</button>
+                    </div>
+                </div>
+
+                <!-- Rencana Mingguan -->
+                <div class="form-section">
+                    <h2 class="form-section-title">5. Rencana Pembelajaran Mingguan</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mg.</th>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sub-CPMK</th>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materi Pembelajaran</th>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metode Pembelajaran</th>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pengalaman Belajar</th>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penilaian</th>
+                                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rencana-mingguan-body" class="bg-white divide-y divide-gray-200">
+                                <!-- Rows will be added dynamically here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" onclick="addWeekRow()" class="btn-secondary mt-4">Tambah Minggu</button>
+                </div>
+
+                <!-- Tombol Submit -->
+                <div class="flex justify-end pt-4">
+                    <button type="submit" class="btn-primary text-lg font-semibold">
+                        Generate Dokumen RPS
+                    </button>
+                </div>
+            </form>
+
+            <!-- Pesan Status -->
+            <div id="status-message" class="hidden mt-6 p-4 rounded-md text-sm"></div>
+        </div>
+    </div>
+
+    <script>
+        let weekCounter = 0;
+        let pustakaUtamaCounter = 0;
+        let pustakaPendukungCounter = 0;
+
+        // Fungsi untuk menambah baris Pustaka
+        function addPustaka(type) {
+            const listId = `pustaka-${type}-list`;
+            const counter = type === 'utama' ? ++pustakaUtamaCounter : ++pustakaPendukungCounter;
+            const list = document.getElementById(listId);
+            const namePrefix = `pustaka_${type}`;
+
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'dynamic-list-item';
+            itemDiv.id = `${namePrefix}-item-${counter}`;
+            itemDiv.innerHTML = `
+                <input type="text" name="${namePrefix}[]" class="form-input flex-grow" placeholder="Contoh: Adams, Sean. (2017). The Designer’s Dictionary of Color. New York: Abrams.">
+                <button type="button" onclick="removeItem('${namePrefix}-item-${counter}')" class="btn-danger p-2">X</button>
+            `;
+            list.appendChild(itemDiv);
+        }
+
+        // Fungsi untuk menambah baris pertemuan mingguan
+        function addWeekRow() {
+            weekCounter++;
+            const tbody = document.getElementById('rencana-mingguan-body');
+            const newRow = document.createElement('tr');
+            newRow.id = `week-row-${weekCounter}`;
+            newRow.innerHTML = `
+                <td class="px-2 py-4 whitespace-nowrap"><input type="text" name="minggu_ke[]" class="form-input w-16" value="${weekCounter}" readonly></td>
+                <td class="px-2 py-4"><textarea name="sub_cpmk[]" rows="3" class="form-textarea w-48"></textarea></td>
+                <td class="px-2 py-4"><textarea name="materi_pembelajaran[]" rows="3" class="form-textarea w-48"></textarea></td>
+                <td class="px-2 py-4"><textarea name="metode_pembelajaran[]" rows="3" class="form-textarea w-48"></textarea></td>
+                <td class="px-2 py-4"><textarea name="pengalaman_belajar[]" rows="3" class="form-textarea w-48"></textarea></td>
+                <td class="px-2 py-4"><textarea name="penilaian[]" rows="3" class="form-textarea w-48" placeholder="Indikator, Kriteria, Bobot, Waktu, dll."></textarea></td>
+                <td class="px-2 py-4"><button type="button" onclick="removeItem('week-row-${weekCounter}')" class="btn-danger">Hapus</button></td>
+            `;
+            tbody.appendChild(newRow);
+
+            if (weekCounter === 8 || weekCounter === 16) {
+                // Auto-fill untuk UTS dan UAS
+                const subCpmkTextarea = newRow.querySelector('textarea[name="sub_cpmk[]"]');
+                const materiTextarea = newRow.querySelector('textarea[name="materi_pembelajaran[]"]');
+                if (weekCounter === 8) {
+                    subCpmkTextarea.value = 'UJIAN TENGAH SEMESTER';
+                    materiTextarea.value = 'Tes Tertulis/Praktik';
+                } else if (weekCounter === 16) {
+                    subCpmkTextarea.value = 'UJIAN AKHIR SEMESTER';
+                    materiTextarea.value = 'Tes Tertulis/Praktik/Proyek Akhir';
+                }
+            }
+        }
+        
+        // Fungsi untuk menghapus elemen dinamis (baris atau item)
+        function removeItem(elementId) {
+            const item = document.getElementById(elementId);
+            if (item) {
+                item.remove();
+            }
+        }
+
+        // Fungsi untuk inisialisasi form dengan data awal
+        function initializeForm() {
+            // Tambah 16 pertemuan awal
+            for (let i = 0; i < 16; i++) {
+                addWeekRow();
+            }
+
+            // Tambah beberapa pustaka utama sebagai contoh
+            const pustakaAwal = [
+                "Adams, Sean. (2017). The Designer’s Dictionary of Color. New York: Abrams.",
+                "Aiello, G., & Parry, K. (2019). Visual communication: Understanding images in media culture. Sage.",
+                "Meggs, P.B. & Purvis, W.P. (2016). Meggs’ History of Graphic Design (6th ed.). New Jersey: John Willey & Sons, Inc."
+            ];
+            pustakaAwal.forEach(p => {
+                addPustaka('utama');
+                // FIXED: The selector now correctly uses an underscore to match the generated ID.
+                document.querySelector(`#pustaka_utama-item-${pustakaUtamaCounter} input`).value = p;
+            });
+        }
+
+        // Event listener untuk submit form
+        document.getElementById('rps-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // UPDATED: URL Webhook n8n Anda sudah dimasukkan di sini.
+            const webhookUrl = 'https://n8.isi-ska.ac.id:5678/webhook/rps-generator';
+            
+            const statusMessage = document.getElementById('status-message');
+            statusMessage.className = 'hidden';
+
+            showStatusMessage('Mengirim data dan memproses dokumen...', 'info');
+
+            const formData = new FormData(this);
+            const formObject = {};
+            
+            // Mengumpulkan data dari form, menangani field yang bisa ada banyak (array)
+            formData.forEach((value, key) => {
+                // Jika key berakhir dengan [], ini adalah array
+                if (key.endsWith('[]')) {
+                    const cleanKey = key.slice(0, -2);
+                    if (!formObject[cleanKey]) {
+                        formObject[cleanKey] = [];
+                    }
+                    formObject[cleanKey].push(value);
+                } else {
+                    formObject[key] = value;
+                }
+            });
+
+            // Restrukturisasi data rencana mingguan menjadi array of objects
+            const rencanaMingguan = [];
+            if (formObject.minggu_ke) {
+                for (let i = 0; i < formObject.minggu_ke.length; i++) {
+                    rencanaMingguan.push({
+                        minggu_ke: formObject.minggu_ke[i],
+                        sub_cpmk: formObject.sub_cpmk[i],
+                        materi_pembelajaran: formObject.materi_pembelajaran[i],
+                        metode_pembelajaran: formObject.metode_pembelajaran[i],
+                        pengalaman_belajar: formObject.pengalaman_belajar[i],
+                        penilaian: formObject.penilaian[i],
+                    });
+                }
+            }
+            formObject.rencana_mingguan = rencanaMingguan;
+            // Hapus properti lama yang sudah digabungkan
+            delete formObject.minggu_ke;
+            delete formObject.sub_cpmk;
+            delete formObject.materi_pembelajaran;
+            delete formObject.metode_pembelajaran;
+            delete formObject.pengalaman_belajar;
+            delete formObject.penilaian;
+
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formObject),
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // n8n akan merespon dengan file. Kita trigger download.
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = downloadUrl;
+                // Buat nama file dinamis
+                const fileName = `RPS-${formObject.nama_mk.replace(/ /g, '_')}.docx`;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(downloadUrl);
+                document.body.removeChild(a);
+                
+                showStatusMessage('Dokumen RPS berhasil dibuat dan diunduh!', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatusMessage('Terjadi kesalahan saat membuat dokumen. Cek konsol browser dan workflow n8n Anda.', 'error');
+            }
+        });
+
+        function showStatusMessage(message, type = 'info') {
+            const el = document.getElementById('status-message');
+            el.textContent = message;
+            el.className = 'p-4 rounded-md text-sm ';
+            if (type === 'success') {
+                el.classList.add('bg-green-100', 'text-green-800');
+            } else if (type === 'error') {
+                el.classList.add('bg-red-100', 'text-red-800');
+            } else {
+                el.classList.add('bg-blue-100', 'text-blue-800');
+            }
+        }
+        
+        // Panggil fungsi inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', initializeForm);
+    </script>
+</body>
+</html>
